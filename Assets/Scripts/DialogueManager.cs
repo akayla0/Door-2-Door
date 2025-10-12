@@ -3,9 +3,11 @@ using System.IO;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class DialogueManager : MonoBehaviour
 {
+    public GameObject DialoguePanel;
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI characterNameText;
     public Transform choicesContainer;
@@ -13,6 +15,14 @@ public class DialogueManager : MonoBehaviour
 
     private DialogueData currentDialogue;
     private DialogueNode currentNode;
+    private DialogueManager dialogueManager;
+
+    void Start()
+    {
+        dialogueManager = Object.FindFirstObjectByType<DialogueManager>();
+        DialoguePanel.SetActive(false);
+        LoadDialogue("normal_customer");
+    }
 
     public void LoadDialogue(string fileName)
     {
@@ -36,6 +46,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning($"Node {nodeId} is not found.");
             return;
         }
+
+        DialoguePanel.SetActive (true);
 
         dialogueText.text = currentNode.text;
 
@@ -64,6 +76,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         dialogueText.text = "Conversation ended.";
+        DialoguePanel.SetActive(false);
         foreach (Transform child in choicesContainer ) 
             Destroy(child.gameObject);
     }
