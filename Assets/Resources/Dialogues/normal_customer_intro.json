@@ -5,7 +5,7 @@
             "nodes": [
                 {
                     "id": "intro",
-                    "lines": [
+                    "text": [
                 {
                     "speaker": "Customer",
                     "text": "Hello? Did you need something?"
@@ -27,7 +27,7 @@
         },
         {
             "id": "bad_end_normal_customer",
-            "lines": [
+            "text": [
                 {
                     "speaker": "Customer",
                     "text": "*backs away slowly* Uh... no thanks. I'm good."
@@ -36,7 +36,7 @@
         },
         {
             "id": "normal_customer_1",
-            "lines": [
+            "text": [
                 {
                     "speaker": "Customer",
                     "text": "Hmm, maybe. What is it?"
@@ -55,7 +55,7 @@
         },
         {
             "id": "normal_customer_2",
-            "lines": [
+            "text": [
                 {
                     "speaker": "Customer",
                     "text": "Wow, that sounds interesting! How does it work?"
@@ -74,7 +74,7 @@
         },
         {
             "id": "end_normal_customer",
-            "lines": [
+            "text": [
                 {
                     "speaker": "Customer",
                     "text": "That sounds great! I'll take one."

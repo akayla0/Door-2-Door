@@ -14,6 +14,13 @@ public class DialogueData
 public class DialogueNode
 {
     public string id;
-    public string lines;
+    public string text;
     public List<DialogueChoice> choices;
+}
+
+[Serializable]
+public class DialogueChoice
+{
+    public string text;
+    public string nextId;
 }

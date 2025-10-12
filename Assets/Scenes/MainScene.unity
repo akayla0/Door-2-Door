@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000008f809bdaad9cfaad
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -566,6 +566,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1489582215651209470, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1489582215651209470, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1376084819
+      objectReference: {fileID: 0}
     - target: {fileID: 3108734421657263974, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
       propertyPath: m_Name
       value: Door
@@ -838,6 +846,14 @@ PrefabInstance:
     - target: {fileID: 549525998577659980, guid: 1763bf908bc02b540a49cff1bdbe1e88, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167561064055634596, guid: 1763bf908bc02b540a49cff1bdbe1e88, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167561064055634596, guid: 1763bf908bc02b540a49cff1bdbe1e88, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -627343217
       objectReference: {fileID: 0}
     - target: {fileID: 3401364150258661293, guid: 1763bf908bc02b540a49cff1bdbe1e88, type: 3}
       propertyPath: m_IsTrigger
