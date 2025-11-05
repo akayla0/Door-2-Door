@@ -39,10 +39,40 @@ public class HouseGenerator : MonoBehaviour
             house.transform.parent = transform;
 
             Transform wall = house.transform.Find("Wall");
-            if (wall.TryGetComponent<SpriteRenderer>(out var sr))
+            
+            if(wall != null)
             {
-                sr.color = GetRandomColor();
+                Color color = GetRandomColor();
+                var renderers = wall.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var renderer in renderers)
+                {
+                    renderer.color = color;
+                }
             }
+
+            Transform roof = house.transform.Find("HouseOverlays");
+
+            if(roof != null)
+            {
+                Color color = GetRandomColor();
+                var renderers = roof.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var renderer in renderers)
+                {
+                    renderer.color = color;
+                }
+            }
+
+            Transform curtains = house.transform.Find("Curtains");
+            if(curtains != null)
+            {
+                Color color = GetRandomColor();
+                var renderers = curtains.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var renderer in renderers)
+                {
+                    renderer.color = color;
+                }
+            }
+
         }
         if (barrier == null)
         {
