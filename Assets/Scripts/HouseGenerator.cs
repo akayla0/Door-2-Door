@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;  
 
 public class HouseGenerator : MonoBehaviour
 {
@@ -17,9 +19,35 @@ public class HouseGenerator : MonoBehaviour
 
     void Start()
     {
-        GenerateHouse();
-    }
+        if (GameManager.Instance.houseList.Count > 0)
+        {
+            foreach (var data in GameManager.Instance.houseList)
+            {
+                GameObject house = Instantiate(housePrefab, data.position, Quaternion.identity);
+                house.transform.parent = transform;
 
+                Transform wall = house.transform.Find("Wall");
+                if (wall != null)
+                {
+                    foreach (var renderer in wall.GetComponentsInChildren<SpriteRenderer>())
+                    {
+                        renderer.color = data.houseColor;
+                    }
+                }
+
+                Door door = house.GetComponentInChildren<Door>();
+                if (door != null)
+                {
+                    door.customerName = data.customerType;
+                }
+            }
+        }
+        else
+        {
+            GenerateHouse();
+        }
+    }
+    
     public void GenerateHouse()
     {
         foreach (Transform child in transform)
@@ -27,8 +55,9 @@ public class HouseGenerator : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        int houseCount = Random.Range(minHouses, maxHouses + 1);
+        List<HouseData> houseDataList = new List<HouseData>();
 
+        int houseCount = Random.Range(minHouses, maxHouses + 1);
         float totalWidth = (houseCount - 1) * spacing;
         float startOffset = -totalWidth / 2;
 
@@ -72,6 +101,17 @@ public class HouseGenerator : MonoBehaviour
                     renderer.color = color;
                 }
             }
+
+            string[] customerTypes = { "normal_customer", "angry_customer", "eccentric_customer", "goth_customer", "the_wizard" };
+            string randomCustomer = customerTypes[Random.Range(0, customerTypes.Length)];
+
+            houseDataList.Add(new HouseData
+            {
+                position = position,
+                customerType = randomCustomer,
+                houseColor = color,
+                visited = false
+            });
 
         }
         if (barrier == null)

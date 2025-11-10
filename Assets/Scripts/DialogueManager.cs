@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -70,15 +71,36 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            ShowNode(nextId);
+            if (nextId.StartsWith("bad_end"))
+            {
+                ShowNode(nextId);
+                StartCoroutine(ExitAfterDelay(2.5f));
+            }
+            else
+            {
+                ShowNode(nextId);
+            }
+                
         }
     }
+
+    IEnumerator ExitAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        EndDialogue();
+        ExitDialogueScene();
+    }
+
     void EndDialogue()
     {
         dialogueText.text = "Conversation ended.";
-        DialoguePanel.SetActive(false);
         foreach (Transform child in choicesContainer ) 
             Destroy(child.gameObject);
+    }
+
+    void ExitDialogueScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 
 }

@@ -4,19 +4,31 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
-    public string customerName;
+    [Header("Dialogue Settings")]
     public string dialogueSceneName = "ChatView";
 
+    [Header("Customer Settings")]
+    public string customerName;
+    public string[]possibleCustomers = {"normal_customer", "angry_customer", "eccentric_customer", "goth_customer", "the_wizard"};
+
     private bool playerInRange = false;
-    
+
+    void Start()
+    {
+        if (string.IsNullOrEmpty(customerName))
+        {
+            customerName = possibleCustomers[Random.Range(0,possibleCustomers.Length)];
+        }
+    }
+
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
             GameManager.Instance.currCustomer = customerName;
             GameManager.Instance.SetState(GameState.Talking);
+
             SceneManager.LoadScene(dialogueSceneName);
-            //input: dialouge interaction
         }
     }
 

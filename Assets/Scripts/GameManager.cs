@@ -1,6 +1,8 @@
 using Unity.VisualScripting;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.InputSystem.XR.Haptics;
+using System.Collections.Generic;
 
 public enum GameState
 {
@@ -12,14 +14,26 @@ public enum GameState
     End
 }
 
+[System.Serializable]
+    public class HouseData
+    {
+        public Vector3 position;
+        public string customerType;
+        public Color houseColor;
+        public bool visited;
+        //add little lights that turn off after visiting :)
+    }
 
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-    public GameState currState;
-    public int money;
-    public string currCustomer;
+     public static GameManager Instance;
+     public GameState currState;
+     public int money;
+     public string currCustomer;
+
+
+    public List<HouseData> houseList = new List<HouseData>();
 
     private void Awake() { 
     
@@ -29,6 +43,16 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject); 
+    }
+
+    public void SaveHouseList(List<HouseData> newHouseList)
+    {
+        houseList = newHouseList;
+    }
+
+    public void ClearHouseList()
+    {
+        houseList.Clear();
     }
     void Start()
     {
