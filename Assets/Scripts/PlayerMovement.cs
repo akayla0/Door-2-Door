@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (GameManager.Instance.playerData != null)
+        {
+            transform.position = GameManager.Instance.playerData.position;
+        }
     }
 
     

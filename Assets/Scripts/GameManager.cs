@@ -19,10 +19,26 @@ public enum GameState
     {
         public Vector3 position;
         public string customerType;
-        public Color houseColor;
+
+        public Color wallColor;
+        public Color roofColor;
+        public Color curtainColor;
+
         public bool visited;
         //add little lights that turn off after visiting :)
     }
+[System.Serializable]
+public class BarrierData
+{
+    public Vector3 position;
+    public Vector3 scale;
+}
+[System.Serializable]
+public class PlayerData
+{
+    public int money;
+    public Vector3 position;
+}
 
 
 public class GameManager : MonoBehaviour
@@ -34,6 +50,8 @@ public class GameManager : MonoBehaviour
 
 
     public List<HouseData> houseList = new List<HouseData>();
+    public BarrierData barrierData;
+    public PlayerData playerData;
 
     private void Awake() { 
     

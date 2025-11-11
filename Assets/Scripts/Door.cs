@@ -26,8 +26,16 @@ public class Door : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
             GameManager.Instance.currCustomer = customerName;
-            GameManager.Instance.SetState(GameState.Talking);
 
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                GameManager.Instance.playerData = new PlayerData
+                {
+                    position = player.transform.position,
+                };
+            }
+            GameManager.Instance.SetState(GameState.Talking);
             SceneManager.LoadScene(dialogueSceneName);
         }
     }

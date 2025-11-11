@@ -1,0 +1,51 @@
+{
+  "customerID": "angry_customer",
+  "nodes": [
+    {
+      "id": "intro",
+      "text": "... no one came",
+      "choices": [
+        {
+          "text": "Knock again?",
+          "nextId": "angry_customer_1"
+        }
+      ]
+    },
+    {
+      "id": "bad_end_angry_customer",
+      "text": "Leave me alone! I don't want your stupid pile of junk!"
+    },
+    {
+      "id": "angry_customer_1",
+      "text": "What are you doing BANGING on my door?? Who do you think you are?!",
+      "choices": [
+        {
+          "text": "Woah buddy, calm down! I'm here to sell you something revolutionary!",
+          "nextId": "bad_end_angry_customer"
+        },
+        {
+          "text": "Are you sure? It could absolutely change your life!",
+          "nextId": "angry_customer_2"
+        }
+      ]
+    },
+    {
+      "id": "angry_customer_2",
+      "text": "Well fine, since you're so insistent what even is it???",
+      "choices": [
+        {
+          "text": "Well, you see... *proceeds to give an ANNOYINGLY detailed explanation of the product*",
+          "nextId": "bad_end_angry_customer"
+        },
+        {
+          "text": "Well I may not know just yet but I'm sure you will find the perfect place for it in your life!",
+          "nextId": "end_angry_customer"
+        }
+      ]
+    },
+    {
+      "id": "end_angry_customer",
+      "text": "Whatever just give me it."
+    }
+  ]
+}

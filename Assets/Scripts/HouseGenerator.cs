@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
-using System.Collections.Generic;  
+using System.Collections.Generic;
 
 public class HouseGenerator : MonoBehaviour
 {
@@ -19,6 +19,15 @@ public class HouseGenerator : MonoBehaviour
 
     void Start()
     {
+        if (barrier == null)
+            barrier = GameObject.FindWithTag("Barrier");
+
+        if (GameManager.Instance.barrierData != null && barrier != null)
+        {
+            barrier.transform.position = GameManager.Instance.barrierData.position;
+            barrier.transform.localScale = GameManager.Instance.barrierData.scale;
+        }
+
         if (GameManager.Instance.houseList.Count > 0)
         {
             foreach (var data in GameManager.Instance.houseList)
@@ -26,14 +35,9 @@ public class HouseGenerator : MonoBehaviour
                 GameObject house = Instantiate(housePrefab, data.position, Quaternion.identity);
                 house.transform.parent = transform;
 
-                Transform wall = house.transform.Find("Wall");
-                if (wall != null)
-                {
-                    foreach (var renderer in wall.GetComponentsInChildren<SpriteRenderer>())
-                    {
-                        renderer.color = data.houseColor;
-                    }
-                }
+                ApplyColorToChild(house, "Wall", data.wallColor);
+                ApplyColorToChild(house, "HouseOverlays", data.roofColor);
+                ApplyColorToChild(house, "Curtains", data.curtainColor);
 
                 Door door = house.GetComponentInChildren<Door>();
                 if (door != null)
@@ -46,8 +50,26 @@ public class HouseGenerator : MonoBehaviour
         {
             GenerateHouse();
         }
+
+        if (GameManager.Instance.barrierData != null && GameManager.Instance.barrierData.scale != Vector3.zero)
+        {
+            if (barrier == null)
+            {
+                barrier = new GameObject("Barrier");
+                BoxCollider2D col = barrier.AddComponent<BoxCollider2D>();
+                col.isTrigger = false;
+
+                SpriteRenderer sr = barrier.AddComponent<SpriteRenderer>();
+                sr.color = new Color(0, 0, 0, 0.3f);
+                sr.sprite = Resources.GetBuiltinResource<Sprite>("Sprites/Default.psd");
+            }
+
+            barrier.transform.position = GameManager.Instance.barrierData.position;
+            barrier.transform.localScale = GameManager.Instance.barrierData.scale;
+        }
+
     }
-    
+
     public void GenerateHouse()
     {
         foreach (Transform child in transform)
@@ -60,60 +82,44 @@ public class HouseGenerator : MonoBehaviour
         int houseCount = Random.Range(minHouses, maxHouses + 1);
         float totalWidth = (houseCount - 1) * spacing;
         float startOffset = -totalWidth / 2;
-
+        
         for (int i = 0; i < houseCount; i++)
         {
             Vector3 position = new Vector3(startOffset + i * spacing, topY, 0);
             GameObject house = Instantiate(housePrefab, position, Quaternion.identity);
             house.transform.parent = transform;
 
-            Transform wall = house.transform.Find("Wall");
+            Color wallColor = GetRandomColor();
+            Color roofColor = GetRandomColor();
+            Color curtainColor = GetRandomColor();
+
             
-            if(wall != null)
-            {
-                Color color = GetRandomColor();
-                var renderers = wall.GetComponentsInChildren<SpriteRenderer>();
-                foreach (var renderer in renderers)
-                {
-                    renderer.color = color;
-                }
-            }
-
-            Transform roof = house.transform.Find("HouseOverlays");
-
-            if(roof != null)
-            {
-                Color color = GetRandomColor();
-                var renderers = roof.GetComponentsInChildren<SpriteRenderer>();
-                foreach (var renderer in renderers)
-                {
-                    renderer.color = color;
-                }
-            }
-
-            Transform curtains = house.transform.Find("Curtains");
-            if(curtains != null)
-            {
-                Color color = GetRandomColor();
-                var renderers = curtains.GetComponentsInChildren<SpriteRenderer>();
-                foreach (var renderer in renderers)
-                {
-                    renderer.color = color;
-                }
-            }
+            ApplyColorToChild(house, "Wall", wallColor);
+            ApplyColorToChild(house, "HouseOverlays", roofColor);
+            ApplyColorToChild(house, "Curtains", curtainColor);
 
             string[] customerTypes = { "normal_customer", "angry_customer", "eccentric_customer", "goth_customer", "the_wizard" };
             string randomCustomer = customerTypes[Random.Range(0, customerTypes.Length)];
+
+            Door door = house.GetComponentInChildren<Door>();
+            if (door != null)
+            {
+                door.customerName = randomCustomer;
+            }
 
             houseDataList.Add(new HouseData
             {
                 position = position,
                 customerType = randomCustomer,
-                houseColor = color,
+                wallColor = wallColor,
+                roofColor = roofColor,
+                curtainColor = curtainColor,
                 visited = false
             });
-
         }
+
+        GameManager.Instance.houseList = houseDataList;
+
         if (barrier == null)
         {
             barrier = new GameObject("Barrier");
@@ -123,15 +129,33 @@ public class HouseGenerator : MonoBehaviour
 
         barrier.transform.position = new Vector3(0, barrierY, 0);
         barrier.transform.localScale = new Vector3(totalWidth + 5, .5f, 1);
+
+        GameManager.Instance.barrierData = new BarrierData
+        {
+            position = barrier.transform.position,
+            scale = barrier.transform.localScale
+        };
     }
 
-    Color GetRandomColor()
+        Color GetRandomColor()
+        {
+            return new Color(
+                Random.Range(.5f, 1f),
+                Random.Range(.5f, 1f),
+                Random.Range(.5f, 1f)
+                );
+        }
+
+        void ApplyColorToChild(GameObject parent, string childName, Color color)
     {
-        return new Color(
-            Random.Range(.5f, 1f),
-            Random.Range(.5f, 1f),
-            Random.Range(.5f, 1f)
-            );
+        Transform child = parent.transform.Find(childName);
+        if (child == null) return;
+
+        foreach (var renderer in child.GetComponentsInChildren<SpriteRenderer>())
+        {
+            renderer.color = color;
+        }
     }
 
-}
+    }
+
