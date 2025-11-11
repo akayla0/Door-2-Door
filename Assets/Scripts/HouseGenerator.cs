@@ -58,10 +58,6 @@ public class HouseGenerator : MonoBehaviour
                 barrier = new GameObject("Barrier");
                 BoxCollider2D col = barrier.AddComponent<BoxCollider2D>();
                 col.isTrigger = false;
-
-                SpriteRenderer sr = barrier.AddComponent<SpriteRenderer>();
-                sr.color = new Color(0, 0, 0, 0.3f);
-                sr.sprite = Resources.GetBuiltinResource<Sprite>("Sprites/Default.psd");
             }
 
             barrier.transform.position = GameManager.Instance.barrierData.position;

@@ -71,7 +71,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            if (nextId.StartsWith("bad_end"))
+            if (nextId.StartsWith("bad_end") || nextId.StartsWith("end"))
             {
                 ShowNode(nextId);
                 StartCoroutine(ExitAfterDelay(2.5f));
