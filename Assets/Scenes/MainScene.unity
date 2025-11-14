@@ -646,6 +646,13 @@ MonoBehaviour:
   currState: 0
   money: 0
   currCustomer: 
+  houseList: []
+  barrierData:
+    position: {x: 0, y: 0, z: 0}
+    scale: {x: 0, y: 0, z: 0}
+  playerData:
+    money: 0
+    position: {x: 0, y: 0, z: 0}
 --- !u!4 &1537453981
 Transform:
   m_ObjectHideFlags: 0
