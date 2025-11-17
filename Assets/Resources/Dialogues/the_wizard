@@ -1,0 +1,28 @@
+{
+  "customerID": "the_wizard",
+  "nodes": [
+    {
+      "id": "intro",
+      "text": "Hohohoho! Welcome, traveler. What brings you to my humble abode?",
+      "choices": [
+        {
+          "text": "Good day wizard man! I am here to purchase your magical wares!",
+          "nextId": "items_the_wizard"
+        },
+        {
+          "text": "Nothing today wizard, thank you!",
+          "nextId": "the_wizard_1"
+        }
+      ]
+    },
+    {
+      "id": "items_the_wizard",
+      "text": "Great! I will take you to my items now."
+    },
+ 
+    {
+      "id": "end_the_wizard",
+      "text": "Farewell my friend! May your journey be filled with joy and dough!"
+    }
+  ]
+}

@@ -3,28 +3,24 @@
   "nodes": [
     {
       "id": "intro",
-      "text": "Hello? Did you need something?",
+      "text": "HELLO! WHAT A LOVELY DAY IT IS. WHAT DO YOU BRING FOR ME?",
       "choices": [
         {
-          "text": "Good day! I am here to CHANGE YOUR LIFE! *starts intensely ruffling through bag*",
-          "nextId": "bad_end_eccentric_customer"
-        },
-        {
-          "text": "Hello! I was wondering if you would be interested in a new product that could make your life easier?",
+          "text": "Hello! I was wondering if you would be interested in a.. wait what?",
           "nextId": "eccentric_customer_1"
         }
       ]
     },
     {
       "id": "bad_end_eccentric_customer",
-      "text": "*backs away slowly* Uh... no thanks. I'm good."
+      "text": "I DISLIKE YOUR LACK OF WHIMSY! GOOD DAY TO YOU!"
     },
     {
       "id": "eccentric_customer_1",
-      "text": "Hmm, maybe. What is it?",
+      "text": "YOUR PRODUCT! TELL ME MORE ABOUT IT!",
       "choices": [
         {
-          "text": "It's a... a uh... hmmm.. hold on I forgot..",
+          "text": "Wow you sure are... a lot! Uh, it's just a regular product.",
           "nextId": "bad_end_eccentric_customer"
         },
         {
@@ -35,21 +31,21 @@
     },
     {
       "id": "eccentric_customer_2",
-      "text": "Wow, that sounds interesting! How does it work?",
+      "text": "I LOVE INNOVATION! HOW DOES IT WORK? TELL ME EVERYTHING!",
       "choices": [
         {
-          "text": "Well, you see... *proceeds to give a detailed explanation of the product*",
+          "text": "Well, you see... it kinda just does stuff. You know, the usual.",
           "nextId": "bad_end_eccentric_customer"
         },
         {
-          "text": "It's quite simple, really. Just use it as you would any other product, and you'll see the benefits immediately!",
+          "text": "It is the most marvelous thing! You simply must have one in your life! It will bring you endless joy!",
           "nextId": "end_eccentric_customer"
         }
       ]
     },
     {
       "id": "end_eccentric_customer",
-      "text": "That sounds great! I'll take one."
+      "text": "ABSOLUTELY! I SHALL TAKE IT WITH GREAT PLEASURE!"
     }
   ]
 }
