@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -16,16 +15,33 @@ public class HouseGenerator : MonoBehaviour
     public float barrierY = 3f;
 
     private GameObject barrier;
+    private GameObject leftBarrier;
+    private GameObject rightBarrier;
+
 
     void Start()
     {
         if (barrier == null)
             barrier = GameObject.FindWithTag("Barrier");
+        if (leftBarrier == null)
+            leftBarrier = GameObject.Find("leftBarrier");
+        if (rightBarrier == null)
+            rightBarrier = GameObject.Find("rightBarrier");
 
         if (GameManager.Instance.barrierData != null && barrier != null)
         {
             barrier.transform.position = GameManager.Instance.barrierData.position;
             barrier.transform.localScale = GameManager.Instance.barrierData.scale;
+        }
+        if (GameManager.Instance.leftBarrierData != null && leftBarrier != null)
+        {
+            barrier.transform.position = GameManager.Instance.leftBarrierData.position;
+            barrier.transform.localScale = GameManager.Instance.leftBarrierData.scale;
+        }
+        if (GameManager.Instance.rightBarrierData != null && rightBarrier != null)
+        {
+            barrier.transform.position = GameManager.Instance.rightBarrierData.position;
+            barrier.transform.localScale = GameManager.Instance.rightBarrierData.scale;
         }
 
         if (GameManager.Instance.houseList.Count > 0)
@@ -62,6 +78,30 @@ public class HouseGenerator : MonoBehaviour
 
             barrier.transform.position = GameManager.Instance.barrierData.position;
             barrier.transform.localScale = GameManager.Instance.barrierData.scale;
+        }
+        if (GameManager.Instance.leftBarrierData != null && GameManager.Instance.leftBarrierData.scale != Vector3.zero)
+        {
+            if (leftBarrier == null)
+            {
+                leftBarrier = new GameObject("Barrier");
+                BoxCollider2D col = leftBarrier.AddComponent<BoxCollider2D>();
+                col.isTrigger = false;
+            }
+
+            leftBarrier.transform.position = GameManager.Instance.leftBarrierData.position;
+            leftBarrier.transform.localScale = GameManager.Instance.leftBarrierData.scale;
+        }
+        if (GameManager.Instance.rightBarrierData != null && GameManager.Instance.rightBarrierData.scale != Vector3.zero)
+        {
+            if (rightBarrier == null)
+            {
+                rightBarrier = new GameObject("Barrier");
+                BoxCollider2D col = rightBarrier.AddComponent<BoxCollider2D>();
+                col.isTrigger = false;
+            }
+
+            rightBarrier.transform.position = GameManager.Instance.rightBarrierData.position;
+            rightBarrier.transform.localScale = GameManager.Instance.rightBarrierData.scale;
         }
 
     }
@@ -124,12 +164,47 @@ public class HouseGenerator : MonoBehaviour
         }
 
         barrier.transform.position = new Vector3(0, barrierY, 0);
-        barrier.transform.localScale = new Vector3(totalWidth + 5, .5f, 1);
+        barrier.transform.localScale = new Vector3(totalWidth + 11, .5f, 1);
 
         GameManager.Instance.barrierData = new BarrierData
         {
             position = barrier.transform.position,
             scale = barrier.transform.localScale
+        };
+
+        if (leftBarrier == null)
+        {
+            leftBarrier = new GameObject("LeftBarrier");
+            BoxCollider2D col = leftBarrier.AddComponent<BoxCollider2D>();
+            col.isTrigger = false;
+        }
+        if (rightBarrier == null)
+        {
+            rightBarrier = new GameObject("RightBarrier");
+            BoxCollider2D col = rightBarrier.AddComponent<BoxCollider2D>();
+            col.isTrigger = false;
+        }
+
+
+        float leftX = startOffset - 6f;
+        float rightX = startOffset + 6f + totalWidth;
+
+        leftBarrier.transform.position = new Vector3(leftX, barrierY, 0);
+        rightBarrier.transform.position = new Vector3(rightX, barrierY, 0);
+
+        Vector3 verticalScale = new Vector3(.5f, 10f, 1f);
+        leftBarrier.transform.localScale = verticalScale;
+        rightBarrier.transform.localScale = verticalScale;
+
+        GameManager.Instance.leftBarrierData = new BarrierData
+        {
+            position = leftBarrier.transform.position,
+            scale = leftBarrier.transform.localScale
+        };
+        GameManager.Instance.rightBarrierData = new BarrierData
+        {
+            position = rightBarrier.transform.position,
+            scale = rightBarrier.transform.localScale
         };
     }
 

@@ -1,7 +1,4 @@
-using Unity.VisualScripting;
-using UnityEditor.Build;
 using UnityEngine;
-using UnityEngine.InputSystem.XR.Haptics;
 using System.Collections.Generic;
 
 public enum GameState
@@ -51,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     public List<HouseData> houseList = new List<HouseData>();
     public BarrierData barrierData;
+    public BarrierData leftBarrierData;
+    public BarrierData rightBarrierData;
     public PlayerData playerData;
 
     private void Awake() { 
