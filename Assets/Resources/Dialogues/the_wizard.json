@@ -11,7 +11,7 @@
         },
         {
           "text": "Nothing today wizard, thank you!",
-          "nextId": "the_wizard_1"
+          "nextId": "end_the_wizard"
         }
       ]
     },

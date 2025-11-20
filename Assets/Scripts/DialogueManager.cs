@@ -1,10 +1,11 @@
-using UnityEngine;
-using System.IO;
-using TMPro;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -87,6 +88,14 @@ public class DialogueManager : MonoBehaviour
                 ShowNode(nextId);
                 StartCoroutine(ExitAfterDelay(2.5f));
             }
+            if (nextId.StartsWith("items"))
+            {
+                string shop = "ShopScene";
+                ShowNode(nextId);
+
+                GameManager.Instance.SetState(GameState.Shopping);
+                StartCoroutine(LoadSceneDelayed(shop, 2f));
+            }
             else
             {
                 ShowNode(nextId);
@@ -101,6 +110,11 @@ public class DialogueManager : MonoBehaviour
         EndDialogue();
         ExitDialogueScene();
     }
+    IEnumerator LoadSceneDelayed(string sceneName, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneName);
+    }
 
     void EndDialogue()
     {
@@ -113,5 +127,4 @@ public class DialogueManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
-
 }
