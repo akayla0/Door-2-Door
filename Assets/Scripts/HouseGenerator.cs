@@ -5,6 +5,7 @@ public class HouseGenerator : MonoBehaviour
 {
     [Header("House Settings")]
     public GameObject housePrefab;
+    public GameObject WizardTower;
     public int minHouses = 2;
     public int maxHouses = 8;
     public float spacing = 2f;
@@ -13,6 +14,7 @@ public class HouseGenerator : MonoBehaviour
     public float topY = 4f;
     public float startX = 0;
     public float barrierY = 3f;
+    public float groundY = 4f;
 
     private GameObject barrier;
     private GameObject leftBarrier;
@@ -48,12 +50,32 @@ public class HouseGenerator : MonoBehaviour
         {
             foreach (var data in GameManager.Instance.houseList)
             {
-                GameObject house = Instantiate(housePrefab, data.position, Quaternion.identity);
+                GameObject prefabToUse = housePrefab;
+                if (data.customerType == "the_wizard" && WizardTower != null)
+                    prefabToUse = WizardTower;
+
+                GameObject house = Instantiate(prefabToUse, data.position, Quaternion.identity);
+                float lowestY = float.MaxValue;
+
+                foreach (var sr in house.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    float bottom = sr.bounds.min.y;
+                    if (bottom < lowestY)
+                        lowestY = bottom;
+                }
+
+                float offset = groundY - lowestY;
+
+                house.transform.position += new Vector3(0, offset, 0);
+
                 house.transform.parent = transform;
 
-                ApplyColorToChild(house, "Wall", data.wallColor);
-                ApplyColorToChild(house, "HouseOverlays", data.roofColor);
-                ApplyColorToChild(house, "Curtains", data.curtainColor);
+                if (data.customerType != "the_wizard")
+                {
+                    ApplyColorToChild(house, "Wall", data.wallColor);
+                    ApplyColorToChild(house, "HouseOverlays", data.roofColor);
+                    ApplyColorToChild(house, "Curtains", data.curtainColor);
+                }
 
                 Door door = house.GetComponentInChildren<Door>();
                 if (door != null)
@@ -118,30 +140,52 @@ public class HouseGenerator : MonoBehaviour
         int houseCount = Random.Range(minHouses, maxHouses + 1);
         float totalWidth = (houseCount - 1) * spacing;
         float startOffset = -totalWidth / 2;
-        
+
         for (int i = 0; i < houseCount; i++)
         {
-            Vector3 position = new Vector3(startOffset + i * spacing, topY, 0);
-            GameObject house = Instantiate(housePrefab, position, Quaternion.identity);
-            house.transform.parent = transform;
-
-            Color wallColor = GetRandomColor();
-            Color roofColor = GetRandomColor();
-            Color curtainColor = GetRandomColor();
-
-            
-            ApplyColorToChild(house, "Wall", wallColor);
-            ApplyColorToChild(house, "HouseOverlays", roofColor);
-            ApplyColorToChild(house, "Curtains", curtainColor);
-
             string[] customerTypes = { "normal_customer", "angry_customer", "eccentric_customer", "goth_customer", "the_wizard" };
             string randomCustomer = customerTypes[Random.Range(0, customerTypes.Length)];
 
+            Vector3 position = new Vector3(startOffset + i * spacing, topY, 0);
+
+            GameObject prefabToUse = housePrefab;
+            if (randomCustomer == "the_wizard" && WizardTower != null)
+                prefabToUse = WizardTower;
+
+
+            GameObject house = Instantiate(prefabToUse, position, Quaternion.identity);
+            float lowestY = float.MaxValue;
+
+            foreach (var sr in house.GetComponentsInChildren<SpriteRenderer>())
+            {
+                float bottom = sr.bounds.min.y;
+                if (bottom < lowestY)
+                    lowestY = bottom;
+            }
+
+            float offset = groundY - lowestY;
+
+            house.transform.position += new Vector3(0, offset, 0);
+            house.transform.parent = transform;
+
+            Color wallColor = Color.white;
+            Color roofColor = Color.white;
+            Color curtainColor = Color.white;
+
+            if (randomCustomer != "the_wizard")
+            {
+                wallColor = GetRandomColor();
+                roofColor = GetRandomColor();
+                curtainColor = GetRandomColor();
+
+                ApplyColorToChild(house, "Wall", wallColor);
+                ApplyColorToChild(house, "HouseOverlays", roofColor);
+                ApplyColorToChild(house, "Curtains", curtainColor);
+            }
+
             Door door = house.GetComponentInChildren<Door>();
             if (door != null)
-            {
                 door.customerName = randomCustomer;
-            }
 
             houseDataList.Add(new HouseData
             {
@@ -185,9 +229,8 @@ public class HouseGenerator : MonoBehaviour
             col.isTrigger = false;
         }
 
-
         float leftX = startOffset - 6f;
-        float rightX = startOffset + 6f + totalWidth;
+        float rightX = startOffset + totalWidth + 6f;
 
         leftBarrier.transform.position = new Vector3(leftX, barrierY, 0);
         rightBarrier.transform.position = new Vector3(rightX, barrierY, 0);
@@ -208,7 +251,7 @@ public class HouseGenerator : MonoBehaviour
         };
     }
 
-        Color GetRandomColor()
+    Color GetRandomColor()
         {
             return new Color(
                 Random.Range(.5f, 1f),
