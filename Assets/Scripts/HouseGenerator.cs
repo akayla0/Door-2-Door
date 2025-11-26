@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
 
 public class HouseGenerator : MonoBehaviour
 {
@@ -56,6 +57,12 @@ public class HouseGenerator : MonoBehaviour
 
                 GameObject house = Instantiate(prefabToUse, data.position, Quaternion.identity);
                 float lowestY = float.MaxValue;
+
+                Light2D[] light = house.GetComponentsInChildren<Light2D>();
+                foreach (var l in light)
+                {
+                    l.enabled = false;
+                }
 
                 foreach (var sr in house.GetComponentsInChildren<SpriteRenderer>())
                 {
@@ -155,6 +162,12 @@ public class HouseGenerator : MonoBehaviour
 
             GameObject house = Instantiate(prefabToUse, position, Quaternion.identity);
             float lowestY = float.MaxValue;
+
+            Light2D light = house.GetComponentInChildren<Light2D>();
+            if (light != null)
+            {
+                light.enabled = true;
+            }
 
             foreach (var sr in house.GetComponentsInChildren<SpriteRenderer>())
             {

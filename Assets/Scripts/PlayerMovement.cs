@@ -21,6 +21,15 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            movespeed = 8f;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            movespeed = 5f;
+        }
+
     }
 
     private void FixedUpdate()

@@ -4,17 +4,24 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    public string itemName;
-    public int itemID;
-    public Sprite itemIcon;
-    public float itemValue;
 
-    public Item(string name, int id, Sprite icon, float value)
-    {
-        itemName = name;
-        itemID = id;
-        itemIcon = icon;
-        itemValue = value;
+    public string name;
+    public int price;
+    public string desc;
+    public ItemType type;
+
+    public Item(string name, int price)
+        {
+            this.name = name;
+            this.price = price;
+            this.desc = "";
     }
 
-}
+    }
+    public enum ItemType
+    {
+        organic,
+        metal,
+        trash,
+        magical
+    }

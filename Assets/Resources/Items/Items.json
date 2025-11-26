@@ -1,0 +1,28 @@
+{
+    "items": [
+    {
+        "name": "Leaf",
+        "price": 1,
+        "desc": "It's just a leaf..",
+        "type": "organic"
+    },
+    {
+        "name": "Pipe",
+        "price": 5,
+        "desc": "A little rusty",
+        "type": "metal"
+    },
+    {
+        "name": "Crumpled Paper",
+        "price": 0,
+        "desc": "Just take it, I don't want this anyways",
+        "type": "trash"
+    },
+    {
+        "name": "The ORB",
+        "price": 100,
+        "desc": "Oooo mystical",
+        "type": "magical"
+    }
+]
+}

@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
@@ -27,6 +28,17 @@ public class Door : MonoBehaviour
         {
             GameManager.Instance.currCustomer = customerName;
 
+            Transform houseRoot = transform.parent;
+
+            foreach (var house in GameManager.Instance.houseList)
+            {
+                if (house.customerType == customerName && Vector3.Distance(house.position, houseRoot.position) < 0.1f)
+                {
+                    house.visited = true;
+                    break;
+                }
+            }
+
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
@@ -37,6 +49,12 @@ public class Door : MonoBehaviour
             }
             GameManager.Instance.SetState(GameState.Talking);
             SceneManager.LoadScene(dialogueSceneName);
+
+            Light2D[] light = houseRoot.GetComponentsInChildren<Light2D>();
+            foreach (var l in light)
+            {
+                l.enabled = false;
+            }
         }
     }
 
