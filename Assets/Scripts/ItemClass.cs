@@ -24,4 +24,4 @@ public class Item
         metal,
         trash,
         magical
-    }
+    } 

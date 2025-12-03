@@ -34,7 +34,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (Item item in items)
         {
-            Debug.Log("Inventory Item: " + item.itemName);
+            Debug.Log("Inventory Item: " + item.name);
         }
     }
 }

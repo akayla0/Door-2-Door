@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.Pool;
+
 
 public class ShopManager : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public class ShopManager : MonoBehaviour
     public Transform itemsContainer;
     public GameObject itemButtonPrefab;
     public TextMeshProUGUI moneyText;
+
+    [Header("Daily Shop Elements")]
+    public int minDailyItems = 4;
+    public int maxDailyItems = 10;
 
     [Header("Player Data")]
     public int playerMoney = 1000;
@@ -20,7 +26,10 @@ public class ShopManager : MonoBehaviour
     {
         shopPanel.SetActive(true);
         LoadItemsFromJSON("Items");
-        PopulateShopUI();
+        
+        List<Item> dailyItems = GetRandomDailyItems();
+        PopulateDailyShopUI(dailyItems);
+
         UpdateCurrencyUI();
     }
 
@@ -32,29 +41,9 @@ public class ShopManager : MonoBehaviour
             Debug.LogError($"Items file '{fileName}' not found!");
             return;
         }
-
-        shopItems = JsonUtilityWrapper.FromJsonArray<Item>(jsonFile.text);
+        ItemCollection loaded = JsonUtility.FromJson<ItemCollection>(jsonFile.text);
+        shopItems = new List<Item>(loaded.items);
     }
-
-    void PopulateShopUI()
-    {
-        foreach (Transform child in itemsContainer)
-        {
-            Destroy(child.gameObject);
-        }
-
-        foreach (var item in shopItems)
-        {
-            GameObject newButtonObj = Instantiate(itemButtonPrefab, itemsContainer);
-            Button newButton = newButtonObj.GetComponent<Button>();
-
-            TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = $"{item.name}\nPrice: ${item.price}";
-
-            newButton.onClick.AddListener(() => BuyItem(item));
-        }
-    }
-
 
     void BuyItem(Item item)
     {
@@ -76,5 +65,45 @@ public class ShopManager : MonoBehaviour
         moneyText.text = $"Money: ${playerMoney}";
     }
 
+    List<Item> GetRandomDailyItems()
+    {
+        List<Item> dailyItems = new List<Item>(shopItems);
+
+        for (int i = 0; i <  dailyItems.Count; i++)
+        {
+            Item temp = dailyItems[i];
+            int randomIndex = Random.Range(i, dailyItems.Count);
+            dailyItems[i] = dailyItems[randomIndex];
+            dailyItems[randomIndex] = temp;
+        }
+
+        int amountToTake = Random.Range(minDailyItems,maxDailyItems + 1);
+
+        amountToTake = Mathf.Min(amountToTake, dailyItems.Count);
+
+        return dailyItems.GetRange(0, amountToTake);
+
     }
+
+    void PopulateDailyShopUI(List<Item> dailyItems)
+    {
+        foreach (Transform child in itemsContainer)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        foreach (var item in dailyItems)
+        {
+            GameObject buttonObj = Instantiate(itemButtonPrefab, itemsContainer);
+            Button newButton = buttonObj.GetComponent<Button>();
+            TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
+
+            buttonText.text = $"{item.name}\nPrice: ${item.price}";
+
+            newButton.onClick.AddListener(() => BuyItem(item));
+        }
+    }
+}
+
+
 
