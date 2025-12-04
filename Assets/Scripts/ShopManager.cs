@@ -12,6 +12,7 @@ public class ShopManager : MonoBehaviour
     public Transform itemsContainer;
     public GameObject itemButtonPrefab;
     public TextMeshProUGUI moneyText;
+    public Button openButton;
 
     [Header("Daily Shop Elements")]
     public int minDailyItems = 4;
@@ -24,7 +25,7 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
-        shopPanel.SetActive(true);
+        shopPanel.SetActive(false);
         LoadItemsFromJSON("Items");
         
         List<Item> dailyItems = GetRandomDailyItems();
@@ -35,7 +36,7 @@ public class ShopManager : MonoBehaviour
 
     void LoadItemsFromJSON(string fileName)
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>(fileName);
+        TextAsset jsonFile = Resources.Load<TextAsset>("Items/" + fileName);
         if (jsonFile == null)
         {
             Debug.LogError($"Items file '{fileName}' not found!");
@@ -102,6 +103,18 @@ public class ShopManager : MonoBehaviour
 
             newButton.onClick.AddListener(() => BuyItem(item));
         }
+    }
+
+    public void OpenShop()
+    {
+        shopPanel.SetActive(true);
+        openButton.gameObject.SetActive(false);
+    }
+
+    public void CloseShop()
+    {
+        shopPanel.SetActive(false);
+        openButton.gameObject.SetActive(true);
     }
 }
 
