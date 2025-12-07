@@ -21,7 +21,7 @@ public class HouseGenerator : MonoBehaviour
     private GameObject leftBarrier;
     private GameObject rightBarrier;
 
-    public static bool wizardCastleSpawned = false;
+    public bool wizardCastleSpawned = false;
 
 
     void Start()

@@ -13,6 +13,7 @@ public class ShopManager : MonoBehaviour
     public GameObject itemButtonPrefab;
     public TextMeshProUGUI moneyText;
     public Button openButton;
+    public Button closeButton;
 
     [Header("Daily Shop Elements")]
     public int minDailyItems = 4;
@@ -109,13 +110,21 @@ public class ShopManager : MonoBehaviour
     {
         shopPanel.SetActive(true);
         openButton.gameObject.SetActive(false);
+        closeButton.gameObject.SetActive(false);
     }
 
     public void CloseShop()
     {
         shopPanel.SetActive(false);
         openButton.gameObject.SetActive(true);
+        closeButton.gameObject.SetActive(true);
     }
+
+    public void ExitScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+    }
+        
 }
 
 

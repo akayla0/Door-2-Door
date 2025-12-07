@@ -465,7 +465,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: -5773664577084336611, guid: c0cdb3bc52bebf1438ed8190300ee4ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -845,6 +845,7 @@ GameObject:
   - component: {fileID: 917020031950125957}
   - component: {fileID: 1482029278695291743}
   - component: {fileID: 2022543763820343125}
+  - component: {fileID: -2965963142101048069}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -974,6 +975,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.0001, y: 0.0001}
   m_EdgeRadius: 0
+--- !u!210 &-2965963142101048069
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492946902289298084}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &6708279933918013105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,7 +1258,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1489582215651209470, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1489582215651209470, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
       propertyPath: m_SortingOrder
@@ -1314,10 +1327,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3108734421657263974, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915518001510209670}
   m_SourcePrefab: {fileID: 100100000, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
 --- !u!4 &435798931538716947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4337457536778842702, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
   m_PrefabInstance: {fileID: 4196785819603114845}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1232168856454038587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3108734421657263974, guid: 782ef04687ac76f4ebed6311d43a742e, type: 3}
+  m_PrefabInstance: {fileID: 4196785819603114845}
+  m_PrefabAsset: {fileID: 0}
+--- !u!210 &915518001510209670
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232168856454038587}
+  m_Enabled: 1
+  m_SortingLayerID: -1376084819
+  m_SortingLayer: 3
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
