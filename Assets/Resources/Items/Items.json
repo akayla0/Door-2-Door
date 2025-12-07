@@ -23,6 +23,30 @@
         "price": 100,
         "desc": "Oooo mystical",
         "type": "magical"
+    },
+    {
+        "name": "Hand",
+        "price": 75,
+        "desc": "Uhhh where did you find this?",
+        "type": "organic"       
+    },
+    {
+        "name": "Scrap",
+        "price": 10,
+        "desc": "Just a standard piece of scrap metal",
+        "type": "metal"       
+    },
+    {
+        "name": "Apple Core",
+        "price": 0,
+        "desc": "Sorry that was lunch.",
+        "type": "magical"       
+    },
+    {
+        "name": "Doll",
+        "price": 150,
+        "desc": "Noo she's not haunted.. please buy it",
+        "type": "magical"       
     }
 ]
 }

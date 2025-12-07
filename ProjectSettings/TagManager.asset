@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Barrier
   - Door
+  - Car
   layers:
   - Default
   - TransparentFX
@@ -45,6 +46,9 @@ TagManager:
     locked: 0
   - name: Door
     uniqueID: 2918882477
+    locked: 0
+  - name: Car
+    uniqueID: 2586360237
     locked: 0
   - name: Player
     uniqueID: 3667624079

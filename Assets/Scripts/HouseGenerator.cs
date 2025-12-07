@@ -21,6 +21,8 @@ public class HouseGenerator : MonoBehaviour
     private GameObject leftBarrier;
     private GameObject rightBarrier;
 
+    public static bool wizardCastleSpawned = false;
+
 
     void Start()
     {
@@ -52,8 +54,11 @@ public class HouseGenerator : MonoBehaviour
             foreach (var data in GameManager.Instance.houseList)
             {
                 GameObject prefabToUse = housePrefab;
-                if (data.customerType == "the_wizard" && WizardTower != null)
+                if (data.customerType == "the_wizard" && WizardTower != null && wizardCastleSpawned == false)
+                {
                     prefabToUse = WizardTower;
+                    wizardCastleSpawned = true;
+                }
 
                 GameObject house = Instantiate(prefabToUse, data.position, Quaternion.identity);
                 float lowestY = float.MaxValue;
@@ -153,14 +158,23 @@ public class HouseGenerator : MonoBehaviour
             string[] customerTypes = { "normal_customer", "angry_customer", "eccentric_customer", "goth_customer", "the_wizard" };
             string randomCustomer = customerTypes[Random.Range(0, customerTypes.Length)];
 
-            Vector3 position = new Vector3(startOffset + i * spacing, topY, 0);
+            if (randomCustomer == "the_wizard" && wizardCastleSpawned == true)
+            {
+                randomCustomer = customerTypes[Random.Range(0, customerTypes.Length - 1)];
+            }
+
+
+                Vector3 position = new Vector3(startOffset + i * spacing, topY, 0);
 
             GameObject prefabToUse = housePrefab;
-            if (randomCustomer == "the_wizard" && WizardTower != null)
+            if (randomCustomer == "the_wizard" && WizardTower != null && wizardCastleSpawned == false)
+            {
                 prefabToUse = WizardTower;
+                wizardCastleSpawned = true;
+            }
 
 
-            GameObject house = Instantiate(prefabToUse, position, Quaternion.identity);
+                GameObject house = Instantiate(prefabToUse, position, Quaternion.identity);
             float lowestY = float.MaxValue;
 
             Light2D light = house.GetComponentInChildren<Light2D>();
