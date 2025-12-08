@@ -52,12 +52,17 @@ public class GameManager : MonoBehaviour
     public BarrierData rightBarrierData;
     public PlayerData playerData;
 
+    public List<Item> inventory = new List<Item>();
+
     private void Awake() { 
     
         if (Instance == null) 
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            if (money == 0)
+                money = 50;
         }
         else Destroy(gameObject); 
     }
@@ -101,5 +106,30 @@ public class GameManager : MonoBehaviour
 
                 break;
         }
+    }
+
+    public void AddItem (Item item)
+    {
+        inventory.Add(item);
+        Debug.Log("Added " + item.name + " to inventory.");
+    }
+
+    public bool SpendMoney(int amount)
+    {
+        if (money >= amount)
+        {
+            money -= amount;
+            return true;
+        }
+        else
+        {
+            Debug.Log("Not enough money!");
+            return false;
+        }
+    }
+
+    public void AddMoney(int amount)
+    {
+        money += amount;
     }
 }

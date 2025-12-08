@@ -23,5 +23,7 @@ public class Item
         organic,
         metal,
         trash,
-        magical
+        magical,
+        crafted,
+        material
     } 

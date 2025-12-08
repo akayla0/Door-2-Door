@@ -49,22 +49,20 @@ public class ShopManager : MonoBehaviour
 
     void BuyItem(Item item)
     {
-        if (playerMoney >= item.price)
+        if (GameManager.Instance.SpendMoney(item.price))
         {
-            playerMoney -= item.price;
+            GameManager.Instance.AddItem(item);
             UpdateCurrencyUI();
             Debug.Log($"Purchased: {item.name}");
-
-            //add item to inventory at some point lol
         }
         else
         {
-            Debug.Log("Not enough money!");
+            Debug.Log("Not enough money");
         }
     }
     void UpdateCurrencyUI()
     {
-        moneyText.text = $"Money: ${playerMoney}";
+        moneyText.text = $"Money: ${GameManager.Instance.money}";
     }
 
     List<Item> GetRandomDailyItems()
