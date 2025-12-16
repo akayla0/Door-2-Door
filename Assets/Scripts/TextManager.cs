@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Net.Http.Headers;
 
 public class TextManager : MonoBehaviour
 {

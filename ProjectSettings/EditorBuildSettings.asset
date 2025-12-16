@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ShopScene.unity
     guid: d8d6aebe8fbf7224aa7c00ab53d5c8c1
+  - enabled: 1
+    path: Assets/Scenes/CraftScene.unity
+    guid: 815cc9ced77f08d4fbd8e674e472b856
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
